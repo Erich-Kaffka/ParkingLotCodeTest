@@ -21,9 +21,10 @@ namespace ParkingLot.Test
             optionsBuilder.UseInMemoryDatabase();
             var context = new ParkingContext(optionsBuilder.Options);
 
-            //Create controller for lot
+            //Create controllers for lot testing
             var lotController = new ParkingLotController(context);
             var ticketController = new TicketController(context);
+            var paymentController = new PaymentController(context);
 
             var lotItem = lotController.GetParkingLot(1).Result.Value;
 
@@ -43,6 +44,13 @@ namespace ParkingLot.Test
 
             //Test the ticket's total owing is proper value based on short period of time in the lot (up to an hour is 3$)
             Assert.AreEqual(3, updatedTicket.Value.TotalOwing);
+
+            //Complete the transaction by paying for the ticket and exiting the lot
+            await paymentController.CreatePayment(new Payment() { TicketNumber = firstTicket.TicketNumber, CreditCardNumber = 1234123412341234 });
+
+            //Check to see the lot is still updated and emptied
+            Assert.IsFalse(lotItem.IsFull);
+            Assert.AreEqual(0, lotItem.SpotsUsed);
         }
     }
 }

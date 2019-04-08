@@ -21,5 +21,10 @@ namespace ParkingLotCodeTest.Models
         /// Data set containing tickets
         /// </summary>
         public DbSet<Ticket> Tickets { get; set; }
+
+        /// <summary>
+        /// Data set contianing Payments
+        /// </summary>
+        public DbSet<Payment> Payments { get; set; }
     }
 }
