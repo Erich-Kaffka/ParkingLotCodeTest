@@ -52,5 +52,12 @@ namespace ParkingLot.Test
             Assert.IsFalse(lotItem.IsFull);
             Assert.AreEqual(0, lotItem.SpotsUsed);
         }
+
+        //ToDo:
+        // - Test CRUD on all controllers to ensure it works even though not used
+        // - Test expected failures
+        //   - Parking lot full
+        //   - Wrong ticket number check
+        //   - Bad credit card number
     }
 }
