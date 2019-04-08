@@ -23,12 +23,26 @@ namespace ParkingLot.Test
 
             //Create controller for lot
             var lotController = new ParkingLotController(context);
+            var ticketController = new TicketController(context);
 
             var lotItem = lotController.GetParkingLot(1).Result.Value;
 
             //Test initialized lot is empty
             Assert.IsFalse(lotItem.IsFull);
             Assert.AreEqual(0, lotItem.SpotsUsed);
+
+            //Create a ticket representing a customer entering the parking lot
+            Ticket firstTicket = new Ticket() { TicketNumber = 1, TimeEntered = DateTime.Now };
+            await ticketController.CreateTicket(firstTicket);
+
+            //Test the lot is updating as well
+            Assert.IsFalse(lotItem.IsFull);
+            Assert.AreEqual(1, lotItem.SpotsUsed);
+
+            var updatedTicket = await ticketController.GetTicket(firstTicket.TicketNumber);
+
+            //Test the ticket's total owing is proper value based on short period of time in the lot (up to an hour is 3$)
+            Assert.AreEqual(3, updatedTicket.Value.TotalOwing);
         }
     }
 }

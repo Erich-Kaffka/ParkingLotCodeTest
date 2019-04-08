@@ -13,8 +13,13 @@ namespace ParkingLotCodeTest.Models
         }
 
         /// <summary>
-        /// Database to contain set of parking lots
+        /// Data set containing parking lots
         /// </summary>
         public DbSet<ParkingLot> ParkingLot { get; set; }
+
+        /// <summary>
+        /// Data set containing tickets
+        /// </summary>
+        public DbSet<Ticket> Tickets { get; set; }
     }
 }

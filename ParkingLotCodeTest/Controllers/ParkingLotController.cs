@@ -21,7 +21,7 @@ namespace ParkingLotCodeTest.Controllers
         /// <summary>
         /// Initializes the ParkingContext
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">ParkingContext</param>
         public ParkingLotController(ParkingContext context)
         {
             _context = context;
